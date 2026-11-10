@@ -1,0 +1,54 @@
+# Maintainer: Abdullah Khabir <abdullahx1c@gmail.com>
+# Stable releases: https://googlechromereleases.blogspot.com/search/label/Stable%20updates
+pkgname=google-chrome-stable
+pkgver=157.0.8103.50
+pkgrel=1
+pkgdesc="Google Chrome Stable with independently maintained package updates"
+arch=('x86_64')
+url="https://www.google.com/chrome/"
+license=('custom:chrome')
+provides=('google-chrome')
+conflicts=('google-chrome')
+depends=(
+	'alsa-lib'
+	'gtk3'
+	'libcups'
+	'libxss'
+	'libxtst'
+	'nss'
+	'ttf-liberation'
+	'xdg-utils'
+)
+optdepends=(
+	'pipewire: WebRTC desktop sharing under Wayland'
+	'kdialog: file dialogs in KDE'
+	'gnome-keyring: storing passwords in GNOME keyring'
+	'kwallet: storing passwords in KWallet'
+)
+options=('!emptydirs' '!strip')
+
+source=("google-chrome.deb::https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${pkgver}-1_amd64.deb")
+sha256sums=('92148bd14dc05823a64061c2fafcf20d4d82b3fc56f5831206f16d2ac9ee3f79')
+
+package() {
+	bsdtar -xf "$srcdir/data.tar.xz" -C "$pkgdir"
+
+	install -Dm755 /dev/stdin "$pkgdir/usr/bin/google-chrome-stable" <<'EOF'
+#!/bin/bash
+exec /opt/google/chrome/google-chrome "$@"
+EOF
+
+	for size in 16 24 32 48 64 128 256; do
+		install -Dm644 "$pkgdir/opt/google/chrome/product_logo_${size}.png" \
+			"$pkgdir/usr/share/icons/hicolor/${size}x${size}/apps/google-chrome.png"
+	done
+	rm "$pkgdir"/opt/google/chrome/product_logo_*.png
+
+	install -Dm644 "$pkgdir/opt/google/chrome/WidevineCdm/LICENSE" \
+		"$pkgdir/usr/share/licenses/$pkgname/WidevineCdm-LICENSE.txt"
+
+	sed -i \
+		-e '/Exec=/i\StartupWMClass=Google-chrome' \
+		-e 's/x-scheme-handler\/ftp;\?//g' \
+		"$pkgdir/usr/share/applications/google-chrome.desktop"
+}

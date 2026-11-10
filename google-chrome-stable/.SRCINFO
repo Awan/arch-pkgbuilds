@@ -1,0 +1,27 @@
+pkgbase = google-chrome-stable
+	pkgdesc = Google Chrome Stable with independently maintained package updates
+	pkgver = 157.0.8103.50
+	pkgrel = 1
+	url = https://www.google.com/chrome/
+	arch = x86_64
+	license = custom:chrome
+	depends = alsa-lib
+	depends = gtk3
+	depends = libcups
+	depends = libxss
+	depends = libxtst
+	depends = nss
+	depends = ttf-liberation
+	depends = xdg-utils
+	optdepends = pipewire: WebRTC desktop sharing under Wayland
+	optdepends = kdialog: file dialogs in KDE
+	optdepends = gnome-keyring: storing passwords in GNOME keyring
+	optdepends = kwallet: storing passwords in KWallet
+	provides = google-chrome
+	conflicts = google-chrome
+	options = !emptydirs
+	options = !strip
+	source = google-chrome.deb::https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_157.0.8103.50-1_amd64.deb
+	sha256sums = 92148bd14dc05823a64061c2fafcf20d4d82b3fc56f5831206f16d2ac9ee3f79
+
+pkgname = google-chrome-stable
