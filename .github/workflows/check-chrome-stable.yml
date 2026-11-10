@@ -1,0 +1,47 @@
+name: Check Google Chrome Stable
+
+on:
+  schedule:
+    - cron: "23 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check for a newer stable release
+        run: |
+          docker run --rm \
+            --env RUNNER_UID="$(id -u)" \
+            --env RUNNER_GID="$(id -g)" \
+            --volume "$GITHUB_WORKSPACE:/workspace" \
+            archlinux:base-devel \
+            bash -euc '
+              pacman -Sy --noconfirm python
+              getent group "$RUNNER_GID" >/dev/null || groupadd --gid "$RUNNER_GID" updater
+              useradd --uid "$RUNNER_UID" --gid "$RUNNER_GID" --no-create-home updater
+              runuser -u updater -- python /workspace/google-chrome-stable/update.py
+            '
+
+      - name: Open or update release PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/google-chrome-stable-update
+          delete-branch: true
+          title: Update Google Chrome Stable
+          commit-message: Update Google Chrome Stable
+          body: |
+            A newer Google Chrome Stable release was found.
+
+            Please review the version, source URL, and checksum, then test the package before merging.
+          add-paths: |
+            google-chrome-stable/PKGBUILD
+            google-chrome-stable/.SRCINFO
