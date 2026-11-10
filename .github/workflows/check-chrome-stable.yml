@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7.0.1
 
       - name: Check for a newer stable release
         run: |
@@ -24,14 +24,14 @@ jobs:
             --volume "$GITHUB_WORKSPACE:/workspace" \
             archlinux:base-devel \
             bash -euc '
-              pacman -Sy --noconfirm python
+              pacman -Syu --noconfirm python
               getent group "$RUNNER_GID" >/dev/null || groupadd --gid "$RUNNER_GID" updater
               useradd --uid "$RUNNER_UID" --gid "$RUNNER_GID" --no-create-home updater
               runuser -u updater -- python /workspace/google-chrome-stable/update.py
             '
 
       - name: Open or update release PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8.1.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: automation/google-chrome-stable-update
