@@ -1,6 +1,6 @@
 pkgbase = google-chrome-stable
 	pkgdesc = Google Chrome Stable with independently maintained package updates
-	pkgver = 157.0.8103.78
+	pkgver = 158.0.8127.36
 	pkgrel = 1
 	url = https://www.google.com/chrome/
 	arch = x86_64
@@ -21,7 +21,7 @@ pkgbase = google-chrome-stable
 	conflicts = google-chrome
 	options = !emptydirs
 	options = !strip
-	source = https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_157.0.8103.78-1_amd64.deb
-	sha256sums = 4d740636b5c96f687798602c5aad6a5a270f44dd02e48db0638ae77aa4867b1b
+	source = https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_158.0.8127.36-1_amd64.deb
+	sha256sums = 4696bce00b128f385a870ba2eb6eede61698f22374ea0d8e09af8a1c6543d397
 
 pkgname = google-chrome-stable
