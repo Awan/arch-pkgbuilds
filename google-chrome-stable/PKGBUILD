@@ -1,7 +1,7 @@
 # Maintainer: Abdullah Khabir <abdullahx1c@gmail.com>
 # Stable releases: https://googlechromereleases.blogspot.com/search/label/Stable%20updates
 pkgname=google-chrome-stable
-pkgver=158.0.8127.36
+pkgver=158.0.8127.88
 pkgrel=1
 pkgdesc="Google Chrome Stable with independently maintained package updates"
 arch=('x86_64')
@@ -29,7 +29,7 @@ options=('!emptydirs' '!strip')
 
 _deb_revision=1
 source=("https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${pkgver}-${_deb_revision}_amd64.deb")
-sha256sums=('4696bce00b128f385a870ba2eb6eede61698f22374ea0d8e09af8a1c6543d397')
+sha256sums=('a656b2db00a8cb7f13a1d754f6aad91f84014906452c6dfb7f3ead93035da03b')
 
 package() {
 	local deb="google-chrome-stable_${pkgver}-${_deb_revision}_amd64.deb"
